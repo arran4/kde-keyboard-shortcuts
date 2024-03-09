@@ -13,15 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: sudo apt-get install -y build-essential debhelper
-
       - name: Get version from tag
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
 
+      - name: Update version
+        run: | 
+          sed -i "s/^Version: 1\.0\.0$/${{ steps.get_version.outputs.VERSION }}"
+
       - name: Build package
-        run: dpkg-buildpackage -us -uc
+        run: |
+          mkdir -p pkg/usr/share/kcmkeys/
+          cp arrans-kde-keyboard-shortcuts-with-meta.kksrc pkg/usr/share/kcmkeys/arrans.kksrc
+          dpkg-deb --build pkg/ .
 
       - name: Upload package as release artifact
         uses: actions/upload-release-asset@v1
