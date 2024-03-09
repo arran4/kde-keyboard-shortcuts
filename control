@@ -1,0 +1,9 @@
+Source: arrans-kde-keyboard-shortcuts-with-meta
+Section: misc
+Priority: optional
+Maintainer: Arran <arran4@gmail.com>
+Build-Depends: debhelper (>= 9), dh-make
+Standards-Version: 3.9.8
+Homepage: http://arran4.com
+Vcs-Git: https://github.com/arran4/kde-keyboard-shortcuts.git
+Vcs-Browser: https://github.com/arran4/kde-keyboard-shortcuts
