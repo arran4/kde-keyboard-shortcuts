@@ -19,9 +19,9 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install -y build-essential debhelper
 
-      - name: Set version
+      - name: Version
         run: |
-          echo "Version: ${GITHUB_REF#refs/tags/}" > debian/changelog
+          sed -i "s/^version: [0-9.+-]\+$/version: $(echo "$GITHUB_REF_NAME" | sed 's/^v//')/" pubspec.yaml
 
       - name: Build package
         run: dpkg-buildpackage -us -uc
@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ../kde-keyboard-shortcuts-with-meta_${{ github.ref#refs/tags/v }}_all.deb
-          asset_name: kde-keyboard-shortcuts-with-meta_${{ github.ref#refs/tags/v }}_all.deb
+          asset_path: ../kde-keyboard-shortcuts-with-meta_${{ github.ref }}_all.deb
+          asset_name: kde-keyboard-shortcuts-with-meta_${{ github.ref }}_all.deb
           asset_content_type: application/octet-stream
           token: ${{ secrets.GITHUB_TOKEN }}
