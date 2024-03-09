@@ -27,11 +27,10 @@ jobs:
           cp arrans-kde-keyboard-shortcuts-with-meta.kksrc pkg/usr/share/kcmkeys/arrans.kksrc
           dpkg-deb  --root-owner-group --build pkg/ .
 
-      - name: Upload package as release artifact
-        uses: actions/upload-release-asset@v1
+      - name: Release
+        uses: softprops/action-gh-release@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ../kde-keyboard-shortcuts-with-meta_${{ steps.get_version.outputs.VERSION }}_all.deb
-          asset_name: kde-keyboard-shortcuts-with-meta_${{ steps.get_version.outputs.VERSION }}_all.deb
-          asset_content_type: application/octet-stream
-          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            *.txt
