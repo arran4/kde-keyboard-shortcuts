@@ -19,9 +19,9 @@ jobs:
       - name: Generate changelog
         run: |
           git log --pretty=format:"%h %s (%an)" > debian/changelog
-          echo "packagename (version) distribution; urgency=low" | cat - debian/changelog > temp && mv temp debian/changelog
+          echo "kde-keyboard-shortcuts (${{steps.get_version.outputs.VERSION}}) distribution; urgency=low" | cat - debian/changelog > temp && mv temp debian/changelog
           echo "" >> debian/changelog
-          echo " -- Maintainer Name <maintainer@example.com>  $(date -R)" >> debian/changelog
+          echo " -- Arran Ubels <arran4@gmail.com>  $(date -R)" >> debian/changelog
 
       - name: Get version from tag
         id: get_version
