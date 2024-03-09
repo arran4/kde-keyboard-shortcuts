@@ -7,7 +7,7 @@ Maintainer: Arran <arran4@gmail.com>
 Homepage: http://arran4.com
 Vcs-Git: https://github.com/arran4/kde-keyboard-shortcuts.git
 Vcs-Browser: https://github.com/arran4/kde-keyboard-shortcuts
-
+Build-Depends: dpkg
 Package: arrans-kde-keyboard-shortcuts-with-meta
 Package-Type: udeb
 Architecture: all
