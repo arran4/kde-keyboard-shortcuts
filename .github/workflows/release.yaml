@@ -1,0 +1,36 @@
+name: Build Debian Package
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger on tags starting with 'v'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up QMake
+        uses: jurplel/setup-qmake@v1
+
+      - name: Install dependencies
+        run: sudo apt-get install -y build-essential debhelper
+
+      - name: Set version
+        run: |
+          echo "Version: ${GITHUB_REF#refs/tags/}" > debian/changelog
+
+      - name: Build package
+        run: dpkg-buildpackage -us -uc
+
+      - name: Upload package as release artifact
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ../kde-keyboard-shortcuts-with-meta_${{ github.ref#refs/tags/v }}_all.deb
+          asset_name: kde-keyboard-shortcuts-with-meta_${{ github.ref#refs/tags/v }}_all.deb
+          asset_content_type: application/octet-stream
+          token: ${{ secrets.GITHUB_TOKEN }}
