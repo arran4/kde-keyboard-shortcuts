@@ -16,6 +16,10 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install -y build-essential debhelper
 
+      - name: Generate changelog
+        run: |
+          git log --pretty=format:"%h %s (%an)" > debian/changelog
+
       - name: Get version from tag
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
