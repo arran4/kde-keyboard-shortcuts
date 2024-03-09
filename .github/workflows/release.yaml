@@ -1,5 +1,8 @@
 name: Build Debian Package
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
